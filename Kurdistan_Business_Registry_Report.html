@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stamped &amp; Registered — Kurdistan's Business Registry, Decoded</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+:root{
+  --ink:#14171c;
+  --ink-2:#1b1f26;
+  --ink-3:#242a33;
+  --paper:#f1e8d6;
+  --paper-2:#e7dabd;
+  --paper-line: rgba(20,23,28,0.12);
+  --brass:#bd8f45;
+  --brass-light:#dcb877;
+  --stamp:#a63a2c;
+  --stamp-light:#c65a44;
+  --teal:#356e57;
+  --teal-light:#579079;
+  --cream:#ede4d3;
+  --cream-dim:#b9b0a0;
+  --muted:#8b8478;
+  --rule: rgba(237,228,211,0.14);
+
+  --font-display:'Fraunces', serif;
+  --font-body:'IBM Plex Sans', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--ink);
+  color:var(--cream);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img,svg{display:block; max-width:100%;}
+
+.wrap{
+  max-width:1120px;
+  margin:0 auto;
+  padding:0 32px;
+}
+
+/* ---------- Reveal on scroll ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.is-visible{opacity:1; transform:translateY(0);}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1; transform:none; transition:none;}
+  html{scroll-behavior:auto;}
+}
+
+/* ---------- Typography helpers ---------- */
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--brass-light);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.eyebrow::before{
+  content:"";
+  width:22px; height:1px;
+  background:var(--brass-light);
+  display:inline-block;
+}
+
+h1,h2,h3{ font-family:var(--font-display); font-weight:600; }
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:22px;
+  margin-bottom:44px;
+  flex-wrap:wrap;
+}
+.section-head h2{
+  font-size:clamp(30px,4vw,46px);
+  color:var(--paper);
+  line-height:1.05;
+  letter-spacing:-.01em;
+}
+.section-num{
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--muted);
+  white-space:nowrap;
+  padding-bottom:6px;
+}
+
+.lede{
+  font-size:19px;
+  color:var(--cream-dim);
+  max-width:64ch;
+  font-weight:400;
+}
+.lede b, .body-text b{ color:var(--paper); font-weight:600; }
+
+.body-text{
+  font-size:16px;
+  color:var(--cream-dim);
+  max-width:62ch;
+}
+.body-text + .body-text{ margin-top:14px; }
+
+section{
+  padding:96px 0;
+  position:relative;
+}
+section + section{ border-top:1px solid var(--rule); }
+
+/* ---------- Stamp / seal graphic ---------- */
+.stamp-ink{ filter: url(#inkTexture); }
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:140px 0 80px;
+  position:relative;
+  background:
+    radial-gradient(ellipse 900px 500px at 82% -10%, rgba(189,143,69,0.16), transparent 60%),
+    radial-gradient(ellipse 700px 600px at -10% 110%, rgba(53,110,87,0.14), transparent 60%),
+    var(--ink);
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(var(--rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent 65%);
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:40px;
+  align-items:center;
+  position:relative;
+  z-index:1;
+}
+.hero h1{
+  font-size:clamp(52px,7.4vw,96px);
+  color:var(--paper);
+  line-height:0.94;
+  letter-spacing:-0.01em;
+  margin:22px 0 26px;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--stamp-light);
+}
+.hero-sub{
+  font-size:18px;
+  color:var(--cream-dim);
+  max-width:52ch;
+  margin-bottom:34px;
+}
+.hero-sub .n{ color:var(--paper); font-weight:600; font-family:var(--font-mono); }
+
+.hero-stamp-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.scroll-cue{
+  margin-top:46px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.scroll-cue .line{
+  width:34px; height:1px; background:var(--muted);
+  position:relative; overflow:hidden;
+}
+.scroll-cue .line::after{
+  content:"";
+  position:absolute; left:-100%; top:0; bottom:0; width:100%;
+  background:var(--brass-light);
+  animation: slide 2.2s ease-in-out infinite;
+}
+@keyframes slide{ 0%{left:-100%;} 50%{left:0;} 100%{left:100%;} }
+
+/* ---------- Stat strip ---------- */
+.statstrip{
+  padding:0 0 90px;
+}
+.statstrip .wrap{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  border:1px solid var(--rule);
+}
+.statchip{
+  padding:26px 20px;
+  border-right:1px solid var(--rule);
+  text-align:left;
+}
+.statchip:last-child{ border-right:none; }
+.statchip .num{
+  font-family:var(--font-mono);
+  font-size:clamp(24px,2.6vw,32px);
+  color:var(--brass-light);
+  font-weight:600;
+  display:block;
+  margin-bottom:6px;
+}
+.statchip .lbl{
+  font-size:12.5px;
+  color:var(--cream-dim);
+  line-height:1.35;
+}
+
+/* ---------- Big pull number ---------- */
+.pull{
+  display:flex;
+  gap:34px;
+  align-items:center;
+  margin:44px 0 52px;
+  padding:32px 0;
+}
+.pull .fig{
+  font-family:var(--font-mono);
+  font-size:clamp(56px,9vw,120px);
+  font-weight:600;
+  color:var(--stamp-light);
+  line-height:0.9;
+  white-space:nowrap;
+}
+.pull .cap{
+  font-size:16.5px;
+  color:var(--cream-dim);
+  max-width:42ch;
+  border-left:2px solid var(--brass);
+  padding-left:22px;
+}
+.pull .cap b{ color:var(--paper); }
+
+/* ---------- Chart panels ---------- */
+.panel{
+  background:var(--paper);
+  color:var(--ink);
+  border-radius:2px;
+  padding:34px 34px 26px;
+  position:relative;
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,0.55);
+}
+.panel::before{
+  content:"";
+  position:absolute; top:14px; left:14px; right:14px; bottom:14px;
+  border:1px solid var(--paper-line);
+  pointer-events:none;
+}
+.panel-title{
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#6b5f47;
+  margin-bottom:4px;
+}
+.panel-headline{
+  font-family:var(--font-display);
+  font-size:22px;
+  font-weight:600;
+  margin-bottom:18px;
+  color:#221c10;
+}
+.chart-box{ position:relative; width:100%; }
+
+.two-col{
+  display:grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap:28px;
+  align-items:start;
+}
+.stack-col{ display:flex; flex-direction:column; gap:28px; }
+
+@media (max-width:860px){
+  .two-col{ grid-template-columns:1fr; }
+  .hero-grid{ grid-template-columns:1fr; }
+  .statstrip .wrap{ grid-template-columns:repeat(2,1fr); }
+  .statchip:nth-child(2n){ border-right:none; }
+}
+
+/* ---------- Case-note cards (why section) ---------- */
+.notes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+  margin-top:10px;
+}
+.note{
+  background:var(--ink);
+  padding:30px 26px;
+}
+.note .tag{
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--stamp-light);
+  letter-spacing:.08em;
+  margin-bottom:14px;
+  display:block;
+}
+.note h4{
+  font-family:var(--font-display);
+  font-size:19px;
+  color:var(--paper);
+  font-weight:600;
+  margin-bottom:10px;
+  line-height:1.25;
+}
+.note p{ font-size:14.5px; color:var(--cream-dim); }
+.note .stat{
+  font-family:var(--font-mono);
+  color:var(--brass-light);
+  font-weight:600;
+}
+.notes-2{ grid-template-columns:repeat(2,1fr); }
+@media (max-width:860px){ .notes, .notes-2{ grid-template-columns:1fr; } }
+
+/* ---------- Fact grid (section 07) ---------- */
+.factgrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+}
+.fact{
+  background:var(--ink-2);
+  padding:28px 24px;
+  min-height:168px;
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.fact .num{
+  font-family:var(--font-mono);
+  font-size:30px;
+  color:var(--teal-light);
+  font-weight:600;
+}
+.fact p{ font-size:14px; color:var(--cream-dim); margin-top:10px;}
+@media (max-width:860px){ .factgrid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:560px){ .factgrid{ grid-template-columns:1fr; } }
+
+/* ---------- Capital / whale cards ---------- */
+.whales{ display:flex; flex-direction:column; margin-top:8px; }
+.whale{
+  display:grid;
+  grid-template-columns:34px 1fr auto;
+  gap:18px;
+  align-items:center;
+  padding:16px 4px;
+  border-bottom:1px solid var(--paper-line);
+}
+.whale:last-child{ border-bottom:none; }
+.whale .rank{ font-family:var(--font-mono); color:#a1825a; font-size:14px; }
+.whale .name{ font-weight:600; font-size:15px; color:#221c10; }
+.whale .tag2{ font-size:12.5px; color:#6b5f47; margin-top:2px; }
+.whale .amt{ font-family:var(--font-mono); font-weight:600; font-size:15px; text-align:right; color:#221c10; white-space:nowrap;}
+.whale .amt small{ display:block; font-weight:400; color:#8a7d5f; font-size:11px; }
+
+/* ---------- Tags / pills ---------- */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  letter-spacing:.05em;
+  padding:6px 12px;
+  border:1px solid var(--rule);
+  color:var(--cream-dim);
+  border-radius:100px;
+}
+
+/* ---------- Footer ---------- */
+footer{
+  padding:70px 0 90px;
+  background:var(--ink-2);
+}
+footer .cols{
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr;
+  gap:40px;
+}
+footer h5{
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--brass-light);
+  margin-bottom:14px;
+}
+footer p, footer li{ font-size:13.5px; color:var(--cream-dim); line-height:1.65; }
+footer ul{ list-style:none; }
+footer li{ margin-bottom:7px; }
+footer .legal{
+  margin-top:56px;
+  padding-top:26px;
+  border-top:1px solid var(--rule);
+  font-size:12px;
+  color:var(--muted);
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+@media (max-width:860px){ footer .cols{ grid-template-columns:1fr; } }
+
+.small-cap{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#8a7d5f;
+}
+
+.credit-note{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:10px;
+}
+</style>
+</head>
+<body>
+
+<!-- SVG filter defs for stamp ink texture -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="inkTexture" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise" seed="7"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2"/>
+  </filter>
+</svg>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">KRG BUSINESS REGISTRY &nbsp;·&nbsp; FIELD REPORT &nbsp;·&nbsp; 1998 – 2026</div>
+      <h1>Stamped &amp;<br><em>Registered</em></h1>
+      <p class="hero-sub">Fifteen thousand five hundred and forty-one company filings, across eight governorates. Ask what Kurdistan's CEOs actually spend their days doing, and <span class="n">6,737</span> of them give you the same one-word answer.</p>
+      <div class="scroll-cue"><span class="line"></span> SCROLL TO OPEN THE FILE</div>
+    </div>
+    <div class="hero-stamp-wrap">
+      <svg viewBox="0 0 360 360" width="360" height="360" style="transform:rotate(-9deg)">
+        <g class="stamp-ink">
+          <circle cx="180" cy="180" r="164" fill="none" stroke="var(--stamp)" stroke-width="4"/>
+          <circle cx="180" cy="180" r="150" fill="none" stroke="var(--stamp)" stroke-width="1.4" stroke-dasharray="1 7" stroke-linecap="round"/>
+          <path id="arcTop" d="M 55 180 A 125 125 0 0 1 305 180" fill="none"/>
+          <path id="arcBot" d="M 305 190 A 125 125 0 0 1 55 190" fill="none"/>
+          <text font-family="IBM Plex Mono" font-size="16.5" letter-spacing="4" fill="var(--stamp)" font-weight="600">
+            <textPath href="#arcTop" startOffset="50%" text-anchor="middle">GENERAL&#8226;TRADING</textPath>
+          </text>
+          <text font-family="IBM Plex Mono" font-size="14.5" letter-spacing="4" fill="var(--stamp)" font-weight="600">
+            <textPath href="#arcBot" startOffset="50%" text-anchor="middle">KURDISTAN&#8226;REGION</textPath>
+          </text>
+          <text x="180" y="172" text-anchor="middle" font-family="Fraunces" font-size="80" font-weight="700" fill="var(--stamp)">45%</text>
+          <text x="180" y="206" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" letter-spacing="2" fill="var(--stamp)">OF ALL FILINGS</text>
+          <path d="M120 235 l14 14 l30 -34" fill="none" stroke="var(--stamp)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STAT STRIP ============ -->
+<div class="statstrip">
+  <div class="wrap">
+    <div class="statchip reveal">
+      <span class="num">15,541</span>
+      <span class="lbl">companies in the filing set</span>
+    </div>
+    <div class="statchip reveal">
+      <span class="num">8</span>
+      <span class="lbl">governorates &amp; administrations covered</span>
+    </div>
+    <div class="statchip reveal">
+      <span class="num">62.8%</span>
+      <span class="lbl">of companies do some form of trading</span>
+    </div>
+    <div class="statchip reveal">
+      <span class="num">91.7%</span>
+      <span class="lbl">registered as Private Limited companies</span>
+    </div>
+    <div class="statchip reveal">
+      <span class="num">6.2%</span>
+      <span class="lbl">of companies list a female CEO</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SECTION 01 — THE TRADING NATION ============ -->
+<section id="s1">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>The trading<br>nation</h2>
+      <div class="section-num">EXHIBIT 01 / 07 — ACTIVITY TYPES</div>
+    </div>
+
+    <p class="lede reveal">Every company in Kurdistan's registry declares one or more official activities — the specific line(s) of business it's licensed for. Out of nearly <b>1,939 distinct activity types</b> on the books, from mechanical contracting to falcon breeding, one answer dwarfs everything else.</p>
+
+    <div class="pull reveal">
+      <div class="fig">6,737</div>
+      <div class="cap">companies hold a <b>General Trading</b> license — more than the <b>next eleven</b> most common activities <b>combined</b> (5,511). Widen it to every flavor of trading, wholesaling and retail on the books, and it's <b>62.8%</b> of every company filed.</div>
+    </div>
+
+    <div class="two-col reveal">
+      <div class="panel">
+        <div class="panel-title">Fig. 1.1 — By activity type</div>
+        <div class="panel-headline">What CEOs are actually licensed to do</div>
+        <div class="chart-box" style="height:420px;">
+          <canvas id="chartTopActivities"></canvas>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Fig. 1.2 — By broad sector</div>
+        <div class="panel-headline">Grouped into industries</div>
+        <div class="chart-box" style="height:420px;">
+          <canvas id="chartCategories"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-text reveal" style="margin-top:36px;">One in four companies (24.8%) hold a General Trading license and <b>nothing else</b> — no second activity, no specialty, just the broadest possible permission to buy and sell. It is, functionally, the default setting of Kurdish private enterprise.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 02 — WHY TRADING WINS ============ -->
+<section id="s2">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Why trading<br>wins</h2>
+      <div class="section-num">EXHIBIT 02 / 07 — THE CASE FILE</div>
+    </div>
+    <p class="lede reveal">This isn't a random preference. Six structural features of the Kurdistan Region's economy point the same direction, and together they explain why a shop that resells goods is a far easier bet than a factory that makes them.</p>
+
+    <div class="notes reveal">
+      <div class="note">
+        <span class="tag">01 — THE FLOOR IS $760</span>
+        <h4>Registering costs almost nothing</h4>
+        <p>The legal minimum capital to register a company in the KRI is exactly <span class="stat">1,000,000 IQD</span> (~$760). <span class="stat">58%</span> of every company in this dataset registers at precisely that floor. No factory, machinery or import license required — just a shopfront and a supplier.</p>
+      </div>
+      <div class="note">
+        <span class="tag">02 — AN IMPORT ECONOMY</span>
+        <h4>Imports run the shelves</h4>
+        <p>Imports make up roughly <span class="stat">85%</span> of the Region's estimated $5–5.5B in annual external trade, and most of what comes in is consumed locally rather than re-exported as value-added product — a market built to move goods, not make them.</p>
+      </div>
+      <div class="note">
+        <span class="tag">03 — OIL FUNDS THE CART</span>
+        <h4>Petroleum pays for the shopping</h4>
+        <p>Government revenue is overwhelmingly tied to petroleum, funding a consumption economy on the back of resource rents rather than broad-based manufacturing — the textbook pattern of a trade-heavy, production-light private sector.</p>
+      </div>
+      <div class="note">
+        <span class="tag">04 — A 6,000-YEAR CROSSROADS</span>
+        <h4>Geography did the marketing</h4>
+        <p>Trade routes have run through this land for millennia. The Region borders Turkey and Iran directly — its two largest trading partners — and sits as a natural gateway into the rest of Iraq.</p>
+      </div>
+      <div class="note">
+        <span class="tag">05 — FACTORIES CAN'T COMPETE</span>
+        <h4>Industry lacks the basics</h4>
+        <p>Unreliable electricity and water infrastructure deters manufacturers and leaves industry uncompetitive against imports; small family workshops still make up most of what industrial production exists at all.</p>
+      </div>
+      <div class="note">
+        <span class="tag">06 — ONE LICENSE, ANY GOOD</span>
+        <h4>Trading is built to pivot</h4>
+        <p>A "General Trading" license is a blank check — it lets an owner sell whatever is profitable this season, without re-registering. In a market that moves with oil prices and currency swings, that flexibility is worth a lot.</p>
+      </div>
+    </div>
+
+    <div class="panel reveal" style="margin-top:36px;">
+      <div class="panel-title">Fig. 2.1 — International comparison</div>
+      <div class="panel-headline">How unusual is this, really?</div>
+      <div class="chart-box" style="height:340px;">
+        <canvas id="chartCompare"></canvas>
+      </div>
+      <p class="credit-note" style="margin-top:14px;">Note: the Kurdistan figures measure the share of <em>registered companies</em>; the international figures measure shares of <em>small businesses or the workforce</em> — different units of measurement, shown together only to illustrate the scale of the gap. Sources in footer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 03 — GROWTH ============ -->
+<section id="s3">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>A nation filing<br>like never before</h2>
+      <div class="section-num">EXHIBIT 03 / 07 — REGISTRATIONS OVER TIME</div>
+    </div>
+    <p class="lede reveal">The registry stretches back to 1998, but most of it is brand new. Company formation didn't just grow — it detonated in the last three years.</p>
+
+    <div class="pull reveal">
+      <div class="fig">49%</div>
+      <div class="cap">of <b>every company filed since 1998</b> was registered in just the last <b>three and a half years</b> (2023 – Aug 2026). New filings in 2024 alone (<b>2,244</b>) outnumber all of 2018 <b>seven times over</b>.</div>
+    </div>
+
+    <div class="panel reveal">
+      <div class="panel-title">Fig. 3.1 — New filings per year</div>
+      <div class="panel-headline">1998 – 2026 (2026 partial, through Aug 6)</div>
+      <div class="chart-box" style="height:380px;">
+        <canvas id="chartYearly"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 04 — GEOGRAPHY ============ -->
+<section id="s4">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Where they're<br>based</h2>
+      <div class="section-num">EXHIBIT 04 / 07 — GEOGRAPHY</div>
+    </div>
+    <p class="lede reveal">Business in the Kurdistan Region has a clear center of gravity — and trading habits shift noticeably as you move away from it.</p>
+
+    <div class="two-col reveal">
+      <div class="panel">
+        <div class="panel-title">Fig. 4.1 — Companies by governorate</div>
+        <div class="panel-headline">Erbil alone holds 58%</div>
+        <div class="chart-box" style="height:360px;">
+          <canvas id="chartProvince"></canvas>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Fig. 4.2 — Share doing General Trading</div>
+        <div class="panel-headline">By governorate</div>
+        <div class="chart-box" style="height:360px;">
+          <canvas id="chartProvinceGT"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-text reveal" style="margin-top:36px;">Erbil District alone — just one of dozens of districts in the registry — accounts for <b>54.7%</b> of every company filed. Within it, the small Christian quarter of <b>Ankawa</b>, better known for its hotels, churches and nightlife, is home to <b>156</b> registered companies in its own right. Trading intensity peaks not in the capital but out in <b>Zakho</b>, on the Turkish border, where <b>54.7%</b> of all companies are General Traders — likely a reflection of its role as a land-border crossing point.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 05 — PEOPLE ============ -->
+<section id="s5">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Who's behind<br>the desk</h2>
+      <div class="section-num">EXHIBIT 05 / 07 — OWNERSHIP &amp; GENDER</div>
+    </div>
+    <p class="lede reveal">Kurdish private enterprise is personal, not institutional: mostly one owner, mostly one structure, and mostly men.</p>
+
+    <div class="two-col reveal">
+      <div class="panel">
+        <div class="panel-title">Fig. 5.1 — CEO gender</div>
+        <div class="panel-headline">Who's listed as CEO</div>
+        <div class="chart-box" style="height:300px;">
+          <canvas id="chartGender"></canvas>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Fig. 5.2 — Legal structure</div>
+        <div class="panel-headline">How companies are set up</div>
+        <div class="chart-box" style="height:300px;">
+          <canvas id="chartType"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes reveal" style="margin-top:1px;">
+      <div class="note">
+        <span class="tag">CONTEXT</span>
+        <h4>A wider labor-force gap</h4>
+        <p>Only around <span class="stat">15%</span> of working-age women in Iraq are in the labor force at all — one of the lowest rates worldwide — and up to <span class="stat">75%</span> of employed Kurdish women work in the public sector. Female-run private companies are rare well beyond this dataset.</p>
+      </div>
+      <div class="note">
+        <span class="tag">OWNERSHIP</span>
+        <h4>Mostly solo operations</h4>
+        <p>Among companies with shareholder records, <span class="stat">70.3%</span> are wholly owned by a single person. Kurdish business here is overwhelmingly personal and family-run rather than broadly syndicated.</p>
+      </div>
+      <div class="note">
+        <span class="tag">NAMES ON FILE</span>
+        <h4>13,671 names, 15,541 companies</h4>
+        <p>Most CEOs appear once. But <span class="stat">1,250</span> names recur across two or more filings — some likely serial founders, though Kurdish naming conventions (given name + father's + grandfather's name, no fixed surname) mean shared names don't always mean the same person.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 06 — MONEY ============ -->
+<section id="s6">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Follow the<br>money</h2>
+      <div class="section-num">EXHIBIT 06 / 07 — CAPITAL &amp; INVESTMENT</div>
+    </div>
+    <p class="lede reveal">Almost every company in the registry sits at the legal floor. A tiny handful sit somewhere else entirely.</p>
+
+    <div class="two-col reveal">
+      <div class="panel">
+        <div class="panel-title">Fig. 6.1 — Declared capital, by percentile</div>
+        <div class="panel-headline">Nearly everyone at the floor</div>
+        <div class="chart-box" style="height:340px;">
+          <canvas id="chartCapital"></canvas>
+        </div>
+        <p class="credit-note" style="margin-top:10px;">Registered capital in Iraqi dinars, converted at ~1,310 IQD/USD (Aug 2026). Statutory minimum: 1,000,000 IQD (~$763).</p>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Fig. 6.2 — The largest declared filings</div>
+        <div class="panel-headline">Global names on the registry</div>
+        <div class="whales">
+          <div class="whale"><div class="rank">01</div><div><div class="name">China Oil HBP Science &amp; Technology Corp.</div><div class="tag2">General Trading · Oil &amp; Gas Field Services · Erbil</div></div><div class="amt">$22.4B<small>29.3T IQD</small></div></div>
+          <div class="whale"><div class="rank">02</div><div><div class="name">Qatar Airways (ش.م.ق.م)</div><div class="tag2">General Trading · Aviation Services · Erbil</div></div><div class="amt">$20.2B<small>26.5T IQD</small></div></div>
+          <div class="whale"><div class="rank">03</div><div><div class="name">Mass Global Energy (Arbil) Ltd.</div><div class="tag2">Electricity Transmission &amp; Supply · Erbil</div></div><div class="amt">$1.53B<small>2.0T IQD</small></div></div>
+          <div class="whale"><div class="rank">04</div><div><div class="name">Gazprom Neft Middle East B.V.</div><div class="tag2">Oil &amp; Gas Field Development · Erbil</div></div><div class="amt">$622M<small>815B IQD</small></div></div>
+          <div class="whale"><div class="rank">05</div><div><div class="name">Elsewedy Electric</div><div class="tag2">Electrical Contracting &amp; Manufacturing · Erbil</div></div><div class="amt">$534M<small>700B IQD</small></div></div>
+        </div>
+        <p class="credit-note" style="margin-top:14px;">These outsized figures likely reflect declared project or investment-scale capital tied to aviation and oil &amp; gas licensing, not typical small-business paid-in capital — but they show multinational anchors (Qatari, Russian, Egyptian, Jordanian) doing business under the same registry as the corner trading shop.</p>
+      </div>
+    </div>
+
+    <div class="notes notes-2 reveal" style="margin-top:1px;">
+      <div class="note">
+        <span class="tag">FOREIGN MONEY</span>
+        <h4>It mostly arrives as a shareholder, not a flag</h4>
+        <p>Only <span class="stat">2.0%</span> of companies are formally registered as "Foreign Company" origin — but foreign nationals show up as a shareholder in <span class="stat">13.3%</span> of all shareholder listings. Foreign capital tends to sit inside a nominally local company, not a foreign-flagged one.</p>
+      </div>
+      <div class="note">
+        <span class="tag">THE FLOOR, AGAIN</span>
+        <h4>Median capital: 1,000,000 IQD</h4>
+        <p>Half of every company in the registry — the flashy multinationals included — is at or below the exact legal minimum. The 90th percentile is still only <span class="stat">$382,000</span>; it takes the top 1% to clear roughly <span class="stat">$3 million</span>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 07 — FUN FACTS ============ -->
+<section id="s7">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Small details,<br>big picture</h2>
+      <div class="section-num">EXHIBIT 07 / 07 — MISCELLANY</div>
+    </div>
+    <p class="lede reveal">A few more things the registry gives away.</p>
+
+    <div class="factgrid reveal">
+      <div class="fact">
+        <span class="num">1 in 3</span>
+        <p>company names are branded in Latin script rather than Kurdish or Arabic (32.8%) — a small tell of global aspirations.</p>
+      </div>
+      <div class="fact">
+        <span class="num">406</span>
+        <p>companies exist solely to organize Hajj &amp; Umrah pilgrimages — religious tourism is a serious, dedicated business line here.</p>
+      </div>
+      <div class="fact">
+        <span class="num">77</span>
+        <p>companies are licensed currency-exchange intermediaries — no surprise in an economy that runs on both dinars and dollars.</p>
+      </div>
+      <div class="fact">
+        <span class="num">113</span>
+        <p>separate activities are listed on a single filing — the most maximalist business license in the entire dataset.</p>
+      </div>
+      <div class="fact">
+        <span class="num">60.2%</span>
+        <p>of companies are licensed for exactly one activity. Only 18.9% hold three or more — most owners stay narrow.</p>
+      </div>
+      <div class="fact">
+        <span class="num">199</span>
+        <p>companies are licensed cleaners — building cleaning services outnumber IT consultancies (97) two to one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h5>About this report</h5>
+        <p>Built from a filing-level extract of the Kurdistan Region business registry: 15,541 companies across Erbil, Sulaymaniyah, Duhok, Zakho, Raparin, Garmian, Soran and Halabja, dated between 1998 and August 6, 2026. Fields include CEO name and gender, activity types, registered capital, company structure, and shareholder records. This is an independent analysis of that extract, not an official government publication.</p>
+      </div>
+      <div>
+        <h5>External context cited</h5>
+        <ul>
+          <li>American-Kurdish Institute for Economic Research</li>
+          <li>Wikipedia — Economy of the Kurdistan Region</li>
+          <li>GOV.UK — Doing Business in Iraq trade guide</li>
+          <li>GOV.KRD — National Company Registration</li>
+          <li>Kurdistan Gate &amp; Global Law Experts, company law guides</li>
+          <li>Al Jazeera &amp; AFP reporting on Kurdish women entrepreneurs</li>
+          <li>ILO &amp; U.S. small-business statistics, for comparison</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Reading notes</h5>
+        <p>Percentages are of the 15,541-company extract, not of all businesses that have ever existed in the Region. Capital figures are converted at approximately 1,310 IQD/USD (August 2026). Large capital outliers are flagged, not excluded. Repeated CEO names are not confirmed to be the same individual.</p>
+      </div>
+    </div>
+    <div class="legal">
+      <span>Kurdistan Region Business Registry — Field Report</span>
+      <span>Data window: 1998 – 06 Aug 2026 · Compiled Aug 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ================= DATA ================= */
+const yearly = {1998:38,1999:44,2000:60,2001:39,2002:39,2003:21,2004:164,2005:245,2006:311,2007:284,2008:368,2009:366,2010:356,2011:352,2012:481,2013:557,2014:385,2015:386,2016:297,2017:375,2018:324,2019:636,2020:467,2021:685,2022:597,2023:1967,2024:2244,2025:2237,2026:1216};
+
+const topActivities = [
+  ["General Trading",6737],
+  ["Building Contracting",1323],
+  ["Non-specialized wholesale trade",885],
+  ["General Trading Wholesalers",643],
+  ["Buying & Selling of Real Estate",408],
+  ["Hajj & Umra Organizing",406],
+  ["Electrical Contracting",368],
+  ["Real-Estates Investment",345],
+  ["Automobile Trading",339],
+  ["Mechanical Contracting",335]
+];
+
+const categories = [
+  ["Trading & Commerce",62.8],
+  ["Other specialized services",20.0],
+  ["Construction & Contracting",11.9],
+  ["Real Estate",5.9],
+  ["Tourism & Travel",5.3],
+  ["Transport & Logistics",5.2],
+  ["Manufacturing",5.2],
+  ["Technology & IT",2.7],
+  ["Cleaning & Maintenance",2.8],
+  ["Healthcare & Medical",1.9]
+];
+
+const provinces = [
+  ["Erbil",9031],["Sulaymaniyah",4426],["Duhok",1208],["Zakho",636],
+  ["Raparin",114],["Garmian",85],["Soran",24],["Halabja",17]
+];
+
+const provinceGT = [
+  ["Zakho",54.7],["Soran",50.0],["Erbil",46.5],["Duhok",43.3],
+  ["Sulaymaniyah",41.5],["Raparin",40.4],["Garmian",30.6],["Halabja",29.4]
+];
+
+const compareData = [
+  ["Kurdistan — all trading-related companies",62.8],
+  ["Kurdistan — General Trading license alone",45.0],
+  ["Largest national workforce share (Brazil/Chile, wholesale+retail)",18],
+  ["Global wholesale & retail, share of workforce (ILO)",13],
+  ["U.S. small businesses in retail trade",12]
+];
+
+const capitalPercentiles = [
+  ["10th percentile  ·  $763","$763"],
+  ["25th percentile  ·  $763","$763"],
+  ["Median  ·  $763","$763"],
+  ["75th percentile  ·  $76.3K","$76,336"],
+  ["90th percentile  ·  $381.7K","$381,679"],
+  ["95th percentile  ·  $763.4K","$763,359"],
+  ["99th percentile  ·  $3.05M","$3,053,435"]
+];
+// bar length = log10(USD) so the chart is readable across a ~4,000x range; axis numbers are hidden
+// and the real dollar figure is printed directly in each row label + tooltip instead.
+const capitalPercentilesLog = [2.8827,2.8827,2.8827,4.8827,5.5817,5.8827,6.4848];
+
+/* ================= CHART DEFAULTS ================= */
+Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+Chart.defaults.color = "#4a4030";
+
+const ink = "#221c10";
+const brass = "#bd8f45";
+const stamp = "#a63a2c";
+const teal = "#356e57";
+const paperLine = "rgba(34,28,16,0.08)";
+
+function fmtPct(v){ return v + "%"; }
+
+/* ---------- 1.1 Top activities (horizontal bar) ---------- */
+new Chart(document.getElementById('chartTopActivities'), {
+  type:'bar',
+  data:{
+    labels: topActivities.map(d=>d[0]),
+    datasets:[{
+      data: topActivities.map(d=>d[1]),
+      backgroundColor: topActivities.map((d,i)=> i===0 ? stamp : brass),
+      borderRadius:2,
+      maxBarThickness:22
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{ label: c => c.parsed.x.toLocaleString()+" companies" }}
+    },
+    scales:{
+      x:{ grid:{color:paperLine}, border:{display:false}, ticks:{color:'#6b5f47'} },
+      y:{ grid:{display:false}, border:{display:false}, ticks:{color:ink, font:{size:11.5}} }
+    }
+  }
+});
+
+/* ---------- 1.2 Categories (bar) ---------- */
+new Chart(document.getElementById('chartCategories'), {
+  type:'bar',
+  data:{
+    labels: categories.map(d=>d[0]),
+    datasets:[{
+      data: categories.map(d=>d[1]),
+      backgroundColor: categories.map((d,i)=> i===0 ? stamp : (i===1 ? '#c9b58a' : teal)),
+      borderRadius:2,
+      maxBarThickness:22
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{ label: c => c.parsed.x+"% of all companies" }}
+    },
+    scales:{
+      x:{ grid:{color:paperLine}, border:{display:false}, ticks:{color:'#6b5f47', callback:fmtPct} },
+      y:{ grid:{display:false}, border:{display:false}, ticks:{color:ink, font:{size:11.5}} }
+    }
+  }
+});
+
+/* ---------- 2.1 Compare (bar) ---------- */
+new Chart(document.getElementById('chartCompare'), {
+  type:'bar',
+  data:{
+    labels: compareData.map(d=>d[0]),
+    datasets:[{
+      data: compareData.map(d=>d[1]),
+      backgroundColor: compareData.map((d,i)=> i<2 ? stamp : '#9c9c9c'),
+      borderRadius:2,
+      maxBarThickness:26
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{ label: c => c.parsed.x+"%" }}
+    },
+    scales:{
+      x:{ grid:{color:paperLine}, border:{display:false}, ticks:{color:'#6b5f47', callback:fmtPct}, max:70 },
+      y:{ grid:{display:false}, border:{display:false}, ticks:{color:ink, font:{size:12}} }
+    }
+  }
+});
+
+/* ---------- 3.1 Yearly filings (bar + line cumulative) ---------- */
+(function(){
+  const years = Object.keys(yearly);
+  const counts = Object.values(yearly);
+  let cum = []; let running=0;
+  counts.forEach(c=>{ running+=c; cum.push(running); });
+
+  new Chart(document.getElementById('chartYearly'), {
+    data:{
+      labels: years,
+      datasets:[
+        {
+          type:'bar',
+          label:'New filings that year',
+          data: counts,
+          backgroundColor: years.map(y => (y>=2023) ? stamp : brass),
+          borderRadius:2,
+          maxBarThickness:26,
+          order:2
+        },
+        {
+          type:'line',
+          label:'Cumulative total',
+          data: cum,
+          borderColor: teal,
+          backgroundColor: teal,
+          borderWidth:2.4,
+          pointRadius:0,
+          tension:.25,
+          yAxisID:'y1',
+          order:1
+        }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ position:'top', align:'end', labels:{ color:'#4a4030', boxWidth:12, font:{size:11.5} } },
+        tooltip:{ callbacks:{ label: c => c.dataset.label+": "+c.parsed.y.toLocaleString() } }
+      },
+      scales:{
+        x:{ grid:{display:false}, border:{display:false}, ticks:{color:'#6b5f47', font:{size:10.5}} },
+        y:{ position:'left', grid:{color:paperLine}, border:{display:false}, ticks:{color:'#6b5f47'}, title:{display:true,text:'New filings',color:'#6b5f47',font:{size:11}} },
+        y1:{ position:'right', grid:{display:false}, border:{display:false}, ticks:{color:'#6b5f47'}, title:{display:true,text:'Cumulative',color:'#6b5f47',font:{size:11}} }
+      }
+    }
+  });
+})();
+
+/* ---------- 4.1 Province counts ---------- */
+new Chart(document.getElementById('chartProvince'), {
+  type:'bar',
+  data:{
+    labels: provinces.map(d=>d[0]),
+    datasets:[{
+      data: provinces.map(d=>d[1]),
+      backgroundColor: provinces.map((d,i)=> i===0? stamp : brass),
+      borderRadius:2,
+      maxBarThickness:24
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>c.parsed.x.toLocaleString()+" companies"}} },
+    scales:{
+      x:{ grid:{color:paperLine}, border:{display:false}, ticks:{color:'#6b5f47'} },
+      y:{ grid:{display:false}, border:{display:false}, ticks:{color:ink, font:{size:12}} }
+    }
+  }
+});
+
+/* ---------- 4.2 Province GT share ---------- */
+new Chart(document.getElementById('chartProvinceGT'), {
+  type:'bar',
+  data:{
+    labels: provinceGT.map(d=>d[0]),
+    datasets:[{
+      data: provinceGT.map(d=>d[1]),
+      backgroundColor: provinceGT.map((d,i)=> i===0? stamp : teal),
+      borderRadius:2,
+      maxBarThickness:24
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>c.parsed.x+"% General Trading"}} },
+    scales:{
+      x:{ grid:{color:paperLine}, border:{display:false}, ticks:{color:'#6b5f47', callback:fmtPct}, max:60 },
+      y:{ grid:{display:false}, border:{display:false}, ticks:{color:ink, font:{size:12}} }
+    }
+  }
+});
+
+/* ---------- 5.1 Gender donut ---------- */
+new Chart(document.getElementById('chartGender'), {
+  type:'doughnut',
+  data:{
+    labels:['All-male CEO team','At least one female CEO'],
+    datasets:[{
+      data:[93.8,6.2],
+      backgroundColor:[brass, stamp],
+      borderColor:'#f1e8d6',
+      borderWidth:3
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    cutout:'62%',
+    plugins:{
+      legend:{ position:'bottom', labels:{ color:'#4a4030', boxWidth:12, font:{size:12} } },
+      tooltip:{ callbacks:{ label: c => c.parsed+"%" } }
+    }
+  }
+});
+
+/* ---------- 5.2 Company type ---------- */
+new Chart(document.getElementById('chartType'), {
+  type:'bar',
+  data:{
+    labels:['Private Limited','Individual Project','Limited','Joint Liability','Other'],
+    datasets:[{
+      data:[91.7,6.2,1.5,0.5,0.1],
+      backgroundColor:[stamp,brass,brass,brass,brass],
+      borderRadius:2,
+      maxBarThickness:26
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>c.parsed.y+"%"}} },
+    scales:{
+      x:{ grid:{display:false}, border:{display:false}, ticks:{color:'#6b5f47', font:{size:10.5}} },
+      y:{ grid:{color:paperLine}, border:{display:false}, ticks:{color:'#6b5f47', callback:fmtPct} }
+    }
+  }
+});
+
+/* ---------- 6.1 Capital percentile ---------- */
+/* Bars plot log10(declared USD capital) so the ~4,000x range between the median
+   and the top 1% stays legible. Axis numbers are hidden on purpose — the real
+   dollar figure is already printed in the row label and repeated in the tooltip. */
+new Chart(document.getElementById('chartCapital'), {
+  type:'bar',
+  data:{
+    labels: capitalPercentiles.map(d=>d[0]),
+    datasets:[{
+      data: capitalPercentilesLog,
+      base: 2.5,
+      backgroundColor: capitalPercentilesLog.map((v,i)=> i<=2? stamp : brass),
+      borderRadius:2,
+      maxBarThickness:22
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{ callbacks:{ label: c => "Declared capital: "+capitalPercentiles[c.dataIndex][1] } }
+    },
+    scales:{
+      x:{ min:2.5, max:6.8, grid:{color:paperLine}, border:{display:false}, ticks:{display:false} },
+      y:{ grid:{display:false}, border:{display:false}, ticks:{color:ink, font:{size:11.5}} }
+    }
+  }
+});
+
+/* ================= SCROLL REVEAL ================= */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+  });
+},{ threshold:0.12, rootMargin:"0px 0px -60px 0px" });
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
